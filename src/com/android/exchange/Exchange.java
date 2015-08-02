@@ -31,7 +31,11 @@ public class Exchange extends Application {
     public void onCreate() {
         super.onCreate();
         EmailContent.init(this);
-        getContentResolver().call(EmailContent.CONTENT_URI, MailboxUtilities.FIX_PARENT_KEYS_METHOD,
-                "", null);
+        try {
+            getContentResolver().call(EmailContent.CONTENT_URI, 
+                    MailboxUtilities.FIX_PARENT_KEYS_METHOD, "", null);
+        } catch (IllegalArgumentException e) {
+            android.util.Log.w(Eas.LOG_TAG, e.getMessage());
+        }
     }
 }
